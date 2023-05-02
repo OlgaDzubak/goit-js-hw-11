@@ -1,3 +1,4 @@
+@import '~node_modules/modern-normalize/modern-normalize.css';
 
 * {
   box-sizing: border-box;
@@ -11,4 +12,24 @@ body {
   background-color: #fafafa;
   color: #212121;
   line-height: 1.5;
+}
+
+.container {
+  width: 1200px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 100px;
+  padding-bottom: 40px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.link {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }

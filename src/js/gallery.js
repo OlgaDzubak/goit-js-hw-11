@@ -61,7 +61,7 @@ async function clickSearchButton(event){
         // При рендері першої сторінки виводимо у консоль загальну кількість елементів галереї, 
         // кількість на одній сторінці
         if (options.currentPage === 1 ) {
-            console.log("___________________________________________");
+            console.log("_________________________");
             console.log(`total photos = ${options.totalItems}`);
             console.log(`total photos per page = ${options.itemsPerPage}`);
             console.log(`total pages  = ${options.totalPages}`);
@@ -96,7 +96,7 @@ async function clickPaginationButton() {
        smleLightBox.refresh();                                                             // оновлюємо simplelightBox
 
         // Робимо Scroll на початок нової сторінки після її завантаження 
-        const { height: cardHeight } = document.querySelector(".gallery").firstElementChild.getBoundingClientRect();
+        const { height: cardHeight } = gallery.firstElementChild.getBoundingClientRect();
         window.scrollBy({top: cardHeight * 2, behavior: "smooth",});
 
    } catch(error) {                                                                        //якщо запит повернув помилку, обровляємо її (виводимо у консоль)
