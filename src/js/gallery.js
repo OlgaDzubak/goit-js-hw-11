@@ -58,15 +58,13 @@ async function clickSearchButton(event){
         options.totalItems = response.data.total > 500 ? 500 : response.data.total;
         options.totalPages = Math.round(options.totalItems/options.itemsPerPage);  // вираховуємо кількість сторінок
 
-        // При рендері першої сторінки виводимо у консоль загальну кількість елементів галереї, 
-        // кількість на одній сторінці
+        // При рендері першої сторінки виводимо у консоль загальну кількість елементів галереї та кількість на одній сторінці
         if (options.currentPage === 1 ) {
             console.log("_________________________");
             console.log(`total photos = ${options.totalItems}`);
             console.log(`total photos per page = ${options.itemsPerPage}`);
             console.log(`total pages  = ${options.totalPages}`);
         }
-
         console.log(`Current page = ${options.currentPage}`);                           // виводимо у консоль поточну сторінку
         Notify.success(`Hooray!, '"We found for you ${options.totalItems} images.`);    // виводимо повідомлення про кількість знайдених картинок
 
