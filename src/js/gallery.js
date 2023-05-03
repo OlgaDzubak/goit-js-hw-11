@@ -6,6 +6,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { PixabayAPI } from "./pixabayAPI";
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
+import throttle from "lodash/throttle";
 
 // посилання на елементи документа
 const gallery = document.querySelector(".gallery");
@@ -28,6 +29,15 @@ let smleLightBox = new SimpleLightbox('div.gallery a', {captionsData: 'alt', cap
 
 //Вішаємо слухач на input (будемо робити select фрази, яка введена в поле пошуку, при кожному фокусуванні на input)
 searchInput.addEventListener('focus', (event) => { event.target.select(); });
+
+//Вішаємо слухач на input (будемо очищати галерею якщо поле пошуку пусте)
+searchInput.addEventListener('input', onInput);
+function onInput(event){
+    if (!event.target.value) { 
+        gallery.innerHTML = ""; 
+        paginationButton.classList.add("is-hidden");
+    }
+};
 
 //Вішаємо слухач на форму пошуку
 searchForm.addEventListener('submit', clickSearchButton);
