@@ -9,8 +9,9 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 // посилання на елементи документа
 const gallery = document.querySelector(".gallery");
-const searchForm = document.querySelector('#search-form');
-const paginationButton = document.querySelector('.load-more-btn');
+const searchForm = document.querySelector("#search-form");
+const searchInput = document.querySelector("input[name=searchQuery]");
+const paginationButton = document.querySelector(".load-more-btn");
 
 // налаштування options - тут будемо зберігати інформацію для пагінації сторінок
 const options = {   
@@ -24,6 +25,9 @@ const pixabayAPI = new PixabayAPI();
 pixabayAPI.per_page = options.itemsPerPage;
 
 let smleLightBox = new SimpleLightbox('div.gallery a', {captionsData: 'alt', captionDelay: 0});
+
+//Вішаємо слухач на input (будемо робити select фрази, яка введена в поле пошуку, при кожному фокусуванні на input)
+searchInput.addEventListener('focus', (event) => { event.target.select(); });
 
 //Вішаємо слухач на форму пошуку
 searchForm.addEventListener('submit', clickSearchButton);
@@ -84,8 +88,9 @@ async function clickPaginationButton() {
     try {
        options.currentPage+=1;                                                             // збільшуємо лічільник currentPage на 1
 
-       if (options.currentPage > options.totalPages){                                      // виводимо повідомлення якщо дійшли до кінця галереї і виходимо з функції
-        return Report.failure("Oops!","We're sorry, but you've reached the end of search results.");
+       if (options.currentPage === options.totalPages){                                      // виводимо повідомлення якщо дійшли до кінця галереї і виходимо з функції
+            paginationButton.classList.add("is-hidden");
+            Notify.warning("You've reached the end of search results.");
        }
 
        const respons = await pixabayAPI.getPhotoByQuery(options.currentPage);              // робимо http-запит на отримання нової сторінки даних
