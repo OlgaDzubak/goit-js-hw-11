@@ -1,4 +1,5 @@
 
+// імпортуємо потрібні бібліотеки та модулі
 import createGalleryCards from "../tamplates/gallery-card.hbs";
 import Axios from "axios";
 import { Report } from 'notiflix/build/notiflix-report-aio';
@@ -6,9 +7,8 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { PixabayAPI } from "./pixabayAPI";
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
-import throttle from "lodash/throttle";
 
-// посилання на елементи документа
+// перелаємо у змінні посилання на елементи документа
 const gallery = document.querySelector(".gallery");
 const searchForm = document.querySelector("#search-form");
 const searchInput = document.querySelector("input[name=searchQuery]");
@@ -19,12 +19,14 @@ const options = {
     totalItems: 0,                   // загальна кількість картинок, отриманих по запиту 
     itemsPerPage: 40,                // кількість картинок на одній сторінці, задаємл власноруч згідно із ДЗ
     totalPages: 0,                   // кількість сторінок, буде вираховуватись як Math.round(totalItems/itemsPerPage) після запита
-    currentPage: 1,                  // номер початкової сторінки
+    currentPage: 1,                  // номер поточної сторінки (лічильник буде збільшувати кількість на 1 при натисканні кнопки paginationButton)
 }
 
+// створюємо об'єкт класу PixabayAPI (класс, створений для нашого http-запиту) ті передаємо йому початкові параменти, наприклад itemsPerPage
 const pixabayAPI = new PixabayAPI();
 pixabayAPI.per_page = options.itemsPerPage;
 
+// створюємо об'єкт класу SimpleLightbox для перегляду галереї (після того як буде змінюватися розмітка галереї, одразу будем оновлювати smleLightBox)
 let smleLightBox = new SimpleLightbox('div.gallery a', {captionsData: 'alt', captionDelay: 0});
 
 //Вішаємо слухач на input (будемо робити select фрази, яка введена в поле пошуку, при кожному фокусуванні на input)
@@ -39,7 +41,7 @@ function onInput(event){
     }
 };
 
-//Вішаємо слухач на форму пошуку
+//Вішаємо слухач на форму пошуку (будемо ловити подію "submit" - натискання кнопки пошуку)
 searchForm.addEventListener('submit', clickSearchButton);
 async function clickSearchButton(event){
 
